@@ -7,21 +7,21 @@ const User = require("../models/userSchema")
 
 const createUser = async(req, res)=>{
 
-    const { username, email, pasword } = req.body;
-    const valid=await  validate({username, email, pasword});
+    const { username, email, password } = req.body;
+    const valid=await  validate({username, email, password});
     if(valid) {
         const hashedPassword = await bcrypt.hash(valid.password, 10);
-        const user = await user.craete({
+        const user = await User.create({
             username,
             email,
-            pasword: hashedPassword,
+            password: hashedPassword,
         });
         
     if (user){
         res.status(201).json({
-           username: user.username,
-            email: user.email,
-            id:user_id,
+           username:user.username,
+            email:user.email,
+            id:user._id,
             token:generateToken(user.user_id),
         
         })
